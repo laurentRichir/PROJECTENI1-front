@@ -1,6 +1,6 @@
 <script lang="ts">
-import { useProductStore, ProductStore } from './../stores/produit';
-import { defineComponent } from 'vue';
+import { useProductStore, ProductStore } from '../stores/produit';
+import { defineComponent,onMounted } from 'vue';
 
 export default defineComponent({
   setup() {
@@ -8,6 +8,11 @@ export default defineComponent({
 
     // Vous pouvez également appeler explicitement fetchProducts pour charger les produits lorsque nécessaire
     // productStore.fetchProducts();
+
+    // Charger les produits lorsque le composant est monté
+    onMounted(() => {
+      productStore.fetchProducts();
+    });
 
     return {
       productStore,
@@ -19,135 +24,27 @@ export default defineComponent({
 <template>
   <main>
     <h2>Entrées</h2>
-    <a class="produit" href="#">
-      <img src="https://fakeimg.pl/250x100/">
-      <h3>Pizza Orientale</h3>
-      <p class="price">10,99€</p>
-      <ul>
-        <li>Base sauce tomate</li>
-        <li>Poivrons</li>
-        <li>Merguez</li>
-      </ul>
-      <p class="quantity">0</p>
-    </a>
-    <a class="produit" href="#">
-      <img src="https://fakeimg.pl/250x100/">
-      <h3>Pizza Orientale</h3>
-      <p class="price">10,99€</p>
-      <ul>
-        <li>Base sauce tomate</li>
-        <li>Poivrons</li>
-        <li>Merguez</li>
-      </ul>
-      <p class="quantity">0</p>
-    </a>
-    <a class="produit" href="#">
-      <img src="https://fakeimg.pl/250x100/">
-      <h3>Pizza Orientale</h3>
-      <p class="price">10,99€</p>
-      <ul>
-        <li>Base sauce tomate</li>
-        <li>Poivrons</li>
-        <li>Merguez</li>
-      </ul>
-      <p class="quantity">0</p>
-    </a>
-    <a class="produit" href="#">
-      <img src="https://fakeimg.pl/250x100/">
-      <h3>Pizza Orientale</h3>
-      <p class="price">10,99€</p>
-      <ul>
-        <li>Base sauce tomate</li>
-        <li>Poivrons</li>
-        <li>Merguez</li>
-      </ul>
-      <p class="quantity">0</p>
-    </a>
-    <a class="produit" href="#">
-      <img src="https://fakeimg.pl/250x100/">
-      <h3>Pizza Orientale</h3>
-      <p class="price">10,99€</p>
-      <ul>
-        <li>Base sauce tomate</li>
-        <li>Poivrons</li>
-        <li>Merguez</li>
-      </ul>
-      <p class="quantity">0</p>
-    </a>
-    <h2>Pizzas</h2>
-    <a class="produit" href="#">
-      <img src="https://fakeimg.pl/250x100/">
-      <h3>Pizza Orientale</h3>
-      <p class="price">10,99€</p>
-      <ul>
-        <li>Base sauce tomate</li>
-        <li>Poivrons</li>
-        <li>Merguez</li>
-      </ul>
-      <p class="quantity">0</p>
-    </a>
-    <a class="produit" href="#">
-      <img src="https://fakeimg.pl/250x100/">
-      <h3>Pizza Orientale</h3>
-      <p class="price">10,99€</p>
-      <ul>
-        <li>Base sauce tomate</li>
-        <li>Poivrons</li>
-        <li>Merguez</li>
-      </ul>
-      <p class="quantity">0</p>
-    </a>
-    <a class="produit" href="#">
-      <img src="https://fakeimg.pl/250x100/">
-      <h3>Pizza Orientale</h3>
-      <p class="price">10,99€</p>
-      <ul>
-        <li>Base sauce tomate</li>
-        <li>Poivrons</li>
-        <li>Merguez</li>
-      </ul>
-      <p class="quantity">0</p>
-    </a>
-    <a class="produit" href="#">
-      <img src="https://fakeimg.pl/250x100/">
-      <h3>Pizza Orientale</h3>
-      <p class="price">10,99€</p>
-      <ul>
-        <li>Base sauce tomate</li>
-        <li>Poivrons</li>
-        <li>Merguez</li>
-      </ul>
-      <p class="quantity">0</p>
-    </a>
-    <a class="produit" href="#">
-      <img src="https://fakeimg.pl/250x100/">
-      <h3>Pizza Orientale</h3>
-      <p class="price">10,99€</p>
-      <ul>
-        <li>Base sauce tomate</li>
-        <li>Poivrons</li>
-        <li>Merguez</li>
-      </ul>
-      <p class="quantity">0</p>
-    </a>
-
-
-    <template>
-      <div>
-        <div v-if="productStore.products.length === 0">Chargement en cours...</div>
-        <div v-else>
-          <ul>
-            <li v-for="product in productStore.products" :key="product.id">
-              {{ product.name }} - {{ product.price }}
-            </li>
-          </ul>
-        </div>
+    <div>
+      <div v-if="productStore.products.length === 0">Chargement en cours...</div>
+      <div v-else>
+        <ul>
+          <li v-for="product in productStore.products" :key="product.id">
+            {{ product.name }} - {{ product.prix}}€
+          </li>
+        </ul>
       </div>
-    </template>
-
-
-
-
+    </div>
+    <a class="produit" href="#">
+      <img src="https://fakeimg.pl/250x100/">
+      <h3>Pizza Orientale</h3>
+      <p class="price">10,99€</p>
+      <ul>
+        <li>Base sauce tomate</li>
+        <li>Poivrons</li>
+        <li>Merguez</li>
+      </ul>
+      <p class="quantity">0</p>
+    </a>
   </main>
 </template>
 

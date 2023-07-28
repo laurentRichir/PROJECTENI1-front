@@ -1,11 +1,12 @@
 // productStore.ts
-import { defineStore, Store } from 'pinia';
+import { defineStore } from 'pinia';
 
 // Définir le type pour les données des produits
 interface Product {
     id: number;
     name: string;
-    price: number;
+    prix: number;
+    quantite: number;
     // Ajoutez d'autres propriétés si nécessaire
 }
 
@@ -17,9 +18,12 @@ export const useProductStore = defineStore('productStore', {
     actions: {
         async fetchProducts() {
             try {
+                console.log('Fetching products...'); // Débogage pour vérifier si l'action est appelée
                 const response = await fetch('http://localhost:8080/Produits');
                 const data = await response.json();
+                console.log('Data:', data); // Débogage pour vérifier les données récupérées
                 this.products = data as Product[]; // Mettre à jour la liste des produits dans le store
+                console.log('Products:', this.products); // Débogage pour vérifier les produits dans le store
             } catch (error) {
                 console.error('Erreur lors de la récupération des produits:', error);
             }
@@ -28,4 +32,4 @@ export const useProductStore = defineStore('productStore', {
 });
 
 // Ajouter des types pour utiliserProductStore
-export type ProductStore = Store<typeof useProductStore>;
+export type ProductStore = ReturnType<typeof useProductStore>;
