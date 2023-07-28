@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import LaCarte from '../components/LaCarte.vue'
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <LaCarte />
   </main>
 </template>

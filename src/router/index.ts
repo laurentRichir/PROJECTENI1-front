@@ -1,3 +1,4 @@
+// @ts-ignore
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
@@ -6,7 +7,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Consulter la carte',
       component: HomeView
     },
     {
