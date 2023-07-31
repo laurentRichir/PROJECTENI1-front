@@ -1,10 +1,16 @@
 <script lang="ts">
 import { useProductStore, ProductStore, Product } from '../stores/produit';
-import { defineComponent, onMounted } from 'vue';
+import {defineComponent, onMounted, Ref, ref} from 'vue';
+import ConfirmationCommande from './ConfirmationCommande.vue'; // Vérifier le chemin vers ConfirmationCommande.vue
 
 export default defineComponent({
+  components: {
+    ConfirmationCommande
+  },
   setup() {
     const productStore: ProductStore = useProductStore();
+    const afficherConfirmationCommande: Ref<boolean> = ref(false);
+    const produitsCommandes = ref<Product[]>([]); // Variable pour stocker les produits commandés
 
     // Charger les produits lorsque le composant est monté
     onMounted(async () => {
@@ -26,10 +32,17 @@ export default defineComponent({
       if (product.quantity > 0) product.quantity--;
     }
 
-    function maCommande() {
-      productStore.products.forEach((product) => {
-        if (product.quantity > 0) console.log(product);
-      });
+    function validerCommande() {
+      // Filtrer les produits avec une quantité supérieure à 0 pour les ajouter à la commande
+      produitsCommandes.value = productStore.products.filter((product) => product.quantity > 0);
+
+      // Afficher le composant ConfirmationCommande avec les produits commandés
+      afficherConfirmationCommande.value = true;
+    }
+
+    function fermerConfirmation() {
+      // Fermer le composant ConfirmationCommande
+      afficherConfirmationCommande.value = false;
     }
 
     // Liste des types de produits
@@ -45,8 +58,11 @@ export default defineComponent({
       types,
       incrementQuantity,
       decrementQuantity,
-      maCommande,
       getProductsByType,
+      validerCommande,
+      fermerConfirmation,
+      afficherConfirmationCommande,
+      produitsCommandes,
     };
   },
 });
@@ -71,7 +87,9 @@ export default defineComponent({
         <div v-if="getProductsByType(type).length === 0">Aucun produit</div>
       </div>
     </div>
-    <button @click="maCommande()">Valider la commande</button>
+    <button @click="validerCommande">Valider la commande</button>
+    <!-- Composant pour afficher les produits commandés -->
+    <ConfirmationCommande v-if="afficherConfirmationCommande" :produitsCommandes="produitsCommandes" @fermerConfirmation="fermerConfirmation" />
   </main>
 </template>
 
