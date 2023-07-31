@@ -1,6 +1,7 @@
 // @ts-ignore
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import AjouterProduit from "@/views/AddProductView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,6 +10,11 @@ const router = createRouter({
       path: '/',
       name: 'Consulter la carte',
       component: HomeView
+    },
+    {
+      path: '/ajouterProduit',
+      name: 'Ajouter un nouveau produit à la carte',
+      component: AjouterProduit
     },
     {
       path: '/about',

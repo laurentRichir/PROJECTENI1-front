@@ -2,12 +2,15 @@
 import { defineStore } from 'pinia';
 
 // Définir le type pour les données des produits
-interface Product {
-    id: number;
+export interface Product {
+    //id: number;
     name: string;
     prix: number;
-    quantite: number;
-    // Ajoutez d'autres propriétés si nécessaire
+    //quantite: number;
+    //quantity: number;
+    details: string;
+    //type: object;
+    idType: number;
 }
 
 // Définir le type pour le store des produits
@@ -16,6 +19,7 @@ export const useProductStore = defineStore('productStore', {
         products: [] as Product[], // Utiliser le type Product[] pour la liste des produits
     }),
     actions: {
+
         async fetchProducts() {
             try {
                 console.log('Fetching products...'); // Débogage pour vérifier si l'action est appelée
@@ -28,6 +32,32 @@ export const useProductStore = defineStore('productStore', {
                 console.error('Erreur lors de la récupération des produits:', error);
             }
         },
+        async saveProduct(newProduct: Product) {
+            console.log(newProduct, 'SAVE PRODUIT');
+            try{
+                console.log('Saving product...', newProduct);
+
+                // Envoie la requête POST à l'API pour enregistrer le nouveau produit
+                const response = await fetch('http://localhost:8080/SaveProduit',{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newProduct), // Convertit l'objet newProduct en JSON
+                });
+                if(response.ok) {
+                    console.log('Product saved successfully!');
+                    // Tu peux également mettre à jour les produits localement dans le store après l'enregistrement réussi
+                    // Par exemple, en ajoutant le nouveau produit à la liste des produits
+                    // this.products.push(newProduct);
+                    // Merci ChatGPT
+                } else {
+                    console.error('Failed to save product.');
+                }
+            } catch(error) {
+                console.error('Error while saving product', error);
+            }
+        }
     },
 });
 
