@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 
 // Définir le type pour les données des produits
 export interface Product {
-    //id: number;
+    id: number;
     name: string;
     prix: number;
     //quantite: number;
@@ -59,6 +59,12 @@ export const useProductStore = defineStore('productStore', {
             }
         }
     },
+    getters: {
+        //Méthode ChatGPT pour récupérer un produit par son ID
+        getProductById: (state) => (productId: number): Product | undefined => {
+            return state.products.find((product) => product.id === productId);
+        }
+    }
 });
 
 // Ajouter des types pour utiliserProductStore

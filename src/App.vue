@@ -6,12 +6,11 @@ import { RouterLink, RouterView } from 'vue-router'
   <header>
     <div class="wrapper">
       <h1>{{this.$route.name}}</h1>
-      <!--
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/">La carte</RouterLink>
+        <RouterLink to="/lesCommandes">Les commandes</RouterLink>
+        <RouterLink to="/ajouterProduit">Ajouter un produit</RouterLink>
       </nav>
-      -->
     </div>
   </header>
 
@@ -84,6 +83,15 @@ nav a:first-of-type {
 
     padding: 1rem 0;
     margin-top: 1rem;
+  }
+  .confirmation-commande {
+    background-color: lightgrey;
+    position:fixed;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    z-index: -9;
   }
 }
 </style>
