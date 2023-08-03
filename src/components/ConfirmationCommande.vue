@@ -53,22 +53,22 @@ export default defineComponent({
     onMounted(async () => {
       console.log(now);
       if(props.produitsCommandes.length > 0)
-        await commandeStore.saveCommande(newCommande)
+        await commandeStore.createCommande(newCommande)
     });
 
-    const saveNewCommande = async () => {
+    const createNewCommande = async () => {
       // Vérifier que les champs obligatoires sont remplis avant d'enregistrer le nouveau produit
       //if (newCommande.name && newCommande.prix > 0) {
         try {
           // Appel de l'action saveProduct pour enregistrer le nouveau produit dans la base de données
-          await commandeStore.saveCommande(newCommande);
+          await commandeStore.createCommande(newCommande);
 
           // Remettre à zéro les valeurs du formulaire après l'enregistrement réussi
           newCommande.detailOrders = [];
 
-          console.log('Nouveau produit enregistré avec succès !');
+          console.log('Nouvelle commande enregistré avec succès !');
         } catch (error) {
-          console.error('Erreur lors de l\'enregistrement du produit :', error);
+          console.error('Erreur lors de l\'enregistrement de la commande:', error);
         }
       /*} else {
         console.warn('Veuillez remplir les champs obligatoires pour enregistrer le produit.');
@@ -93,7 +93,7 @@ export default defineComponent({
       calculerPrixTotal,
       commandeStore,
       newCommande,
-      saveNewCommande,
+      createNewCommande,
     };
   },
 });

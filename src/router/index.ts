@@ -4,6 +4,8 @@ import HomeView from '../views/HomeView.vue'
 import AjouterProduit from "@/views/AddProductView.vue";
 import ConfirmationCommande from "@/components/ConfirmationCommande.vue";
 import LesCommandes from "@/components/LesCommandes.vue";
+import Logs from "@/components/Logs.vue";
+import AjouterUtilisateur from "@/components/AjouterUtilisateur.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +30,16 @@ const router = createRouter({
       path: '/lesCommandes',
       name: 'Les Commandes',
       component: LesCommandes
+    },
+    {
+      path: '/logs',
+      name: 'Les Logs',
+      component: Logs
+    },
+    {
+      path: '/ajouterUtilisateur',
+      name: 'Ajouter un nouvel utilisateur',
+      component: AjouterUtilisateur
     },
     {
       path: '/about',

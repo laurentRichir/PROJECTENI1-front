@@ -2,7 +2,8 @@ import { defineStore } from 'pinia';
 import type {Product} from "@/stores/produit";
 
 export interface Commande {
-    heurePreparation: string,
+    id: number,
+    heure_preparation: string,
     detailOrder: [
         {
             "produit": number,
@@ -24,6 +25,36 @@ export const useCommandeStore = defineStore('commandeStore', {
         viderCommandes() {
             this.commandes = [];
         },
+        updateStatus(id: number, newStatus: string) {
+            const commande = this.commandes.find((cmd) => cmd.id === id);
+            if(commande) {
+                commande.status = newStatus
+                this.updateCommande(commande);
+            }
+        },
+        async updateCommande(commandeToUpdate: Commande) {
+            try{
+                const response = await fetch(`http://localhost:8080/updateOrder/${commandeToUpdate.id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(commandeToUpdate),
+                });
+                if(response.ok) {
+                    const index = this.commandes.findIndex((cmd) => cmd.id === commandeToUpdate.id);
+                    if(index !== -1) {
+                        this.commandes.splice(index, 1, commandeToUpdate);
+                    }
+                    console.log('Commande mise à jour avec succès!');
+                } else {
+                    console.error('Échec de la mise à jour de la commande.');
+                }
+            } catch(error) {
+                console.error('Erreur lors de la mise à jour de la commande', error);
+            }
+        },
+
         async getCommandes() {
             try{
                 console.log('Fetching products...'); // Débogage pour vérifier si l'action est appelée
@@ -37,7 +68,7 @@ export const useCommandeStore = defineStore('commandeStore', {
 
         },
 
-        async saveCommande(newCommande: Commande) {
+        async createCommande(newCommande: Commande) {
             console.log(newCommande, "SAVE ORDER");
             try{
                 console.log("Saving order...", newCommande);
@@ -48,7 +79,9 @@ export const useCommandeStore = defineStore('commandeStore', {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(newCommande),
-                })
+                });
+                const data = await response.json();
+                console.log(data);
                 if(response.ok) {
                     console.log("Orer saved successfully!");
                 } else {

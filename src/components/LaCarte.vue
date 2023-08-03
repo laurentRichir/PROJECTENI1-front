@@ -12,6 +12,10 @@ export default defineComponent({
     const afficherConfirmationCommande: Ref<boolean> = ref(false);
     const produitsCommandes = ref<Product[]>([]); // Variable pour stocker les produits commandés
 
+    interface Product {
+      enable: boolean;
+    }
+
     // Charger les produits lorsque le composant est monté
     onMounted(async () => {
       await productStore.fetchProducts();
@@ -53,6 +57,15 @@ export default defineComponent({
       return productStore.products.filter((product) => product.type.libelle === type);
     };
 
+    function enableProduct(product: Product) {
+      const updateProduct: Product = {
+        ...product,
+        enable: !product.enable, // Toggle the 'enable' property
+      };
+
+      productStore.updateProduct(updateProduct);
+    }
+
     return {
       productStore,
       types,
@@ -63,6 +76,7 @@ export default defineComponent({
       fermerConfirmation,
       afficherConfirmationCommande,
       produitsCommandes,
+      enableProduct,
     };
   },
 });
@@ -79,9 +93,9 @@ export default defineComponent({
             <h3>{{ product.name }}</h3>
             <p>{{ product.details }}</p>
             <p class="prix">{{ product.prix}}€</p>
+            <input type="checkbox" :checked="product.enable" v-model="product.enable" @click="enableProduct(product)">
             <button @click="incrementQuantity(product)">+</button>
             <button @click="decrementQuantity(product)">-</button>
-            {{  }}
             {{ product.quantity }}
         </a>
         <div v-if="getProductsByType(type).length === 0">Aucun produit</div>

@@ -4,7 +4,7 @@
       <label for="nom">Nom</label>
       <input v-model="newProduct.name" type="text" id="nom" placeholder="Nom du produit" />
       <label for="prix">Prix</label>
-      <input v-model="newProduct.prix" type="number" id="prix" placeholder="Prix" />
+      <input v-model="newProduct.prix" type="number" id="prix" step=".01" placeholder="Prix" />
       <label for="type">Type de produit</label>
       <select v-model="newProduct.idType" id="type">
         <option value="1">Entrée</option>

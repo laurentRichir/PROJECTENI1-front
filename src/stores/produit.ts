@@ -3,14 +3,16 @@ import { defineStore } from 'pinia';
 
 // Définir le type pour les données des produits
 export interface Product {
+    [x: string]: any;
     id: number;
     name: string;
     prix: number;
     //quantite: number;
     //quantity: number;
     details: string;
-    //type: object;
+    type: object;
     idType: number;
+    enable: boolean;
 }
 
 // Définir le type pour le store des produits
@@ -32,6 +34,7 @@ export const useProductStore = defineStore('productStore', {
                 console.error('Erreur lors de la récupération des produits:', error);
             }
         },
+
         async saveProduct(newProduct: Product) {
             console.log(newProduct, 'SAVE PRODUIT');
             try{
@@ -57,7 +60,30 @@ export const useProductStore = defineStore('productStore', {
             } catch(error) {
                 console.error('Error while saving product', error);
             }
-        }
+        },
+
+        async updateProduct(updateProduct: Product) {
+            console.log('Update Product');
+            try{
+                console.log('Update product...', updateProduct);
+
+                // Envoie la requête POST à l'API pour enregistrer le nouveau produit
+                const response = await fetch('http://localhost:8080/UpdateProduit/' + updateProduct.id,{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updateProduct), // Convertit l'objet newProduct en JSON
+                });
+                if(response.ok) {
+                    console.log('Product update successfully!');
+                } else {
+                    console.error('Failed to update product.');
+                }
+            } catch(error) {
+                console.error('Error while updating product', error);
+            }
+        },
     },
     getters: {
         //Méthode ChatGPT pour récupérer un produit par son ID
