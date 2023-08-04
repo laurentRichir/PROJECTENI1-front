@@ -45,6 +45,28 @@ export const useUserStore = defineStore('userStore', {
             }
         },
 
+        async login(user: User) {
+            console.log(user);
+            try {
+                console.log('login....');
+                const response = await
+                fetch('http://localhost:8080/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(user),
+                });
+                if (response.ok) {
+                    console.log('User logged successfully!');
+                } else {
+                    console.log('Failed to login user.');
+                }
+            }catch(error){
+                console.error('Error while loggin user', error);
+            }
+        },
+
 
         async updateUser(userToUpdate: User) {
             try{

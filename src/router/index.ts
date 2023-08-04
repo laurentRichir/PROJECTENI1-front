@@ -6,6 +6,7 @@ import ConfirmationCommande from "@/components/ConfirmationCommande.vue";
 import LesCommandes from "@/components/LesCommandes.vue";
 import Logs from "@/components/Logs.vue";
 import AjouterUtilisateur from "@/components/AjouterUtilisateur.vue";
+import Identification from "@/components/Identification.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,11 @@ const router = createRouter({
       path: '/ajouterUtilisateur',
       name: 'Ajouter un nouvel utilisateur',
       component: AjouterUtilisateur
+    },
+    {
+      path: '/identification',
+      name: 'Identification',
+      component: Identification
     },
     {
       path: '/about',
